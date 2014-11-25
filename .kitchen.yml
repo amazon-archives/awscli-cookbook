@@ -1,0 +1,46 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
+  data_path: test/shared
+
+platforms:
+  - name: ubuntu-14.04
+  - name: ubuntu-12.04
+  - name: centos-6.5
+  - name: centos-6.4
+
+suites:
+  - name: default
+    run_list:
+      - recipe[awscli::default]
+    attributes:
+  - name: test_get
+    run_list:
+      - recipe[test_get::default]
+      - recipe[node_dump::default]
+    attributes:
+      test_get:
+        aws_access_key_id: <%= ENV['TEST_AWS_ACCESS_KEY_ID'] %>
+        aws_secret_access_key: <%= ENV['TEST_AWS_SECRET_ACCESS_KEY'] %>
+        region: <%= ENV['TEST_AWS_REGION'] || 'us-east-1' %>
+        bucket: <%= ENV['TEST_BUCKET'] %>
+        key: <%= ENV['TEST_KEY'] %>
+        checksum: <%= ENV['TEST_CHECKSUM'] %>
+  - name: test_virtualenv
+    run_list:
+      - recipe[test_virtualenv::default]
+
+  # For EC2 instances with a valid instance profile only
+  - name: profile_test_get
+    run_list:
+      - recipe[test_get::profile]
+      - recipe[node_dump::default]
+    attributes:
+      test_get:
+        bucket: <%= ENV['TEST_BUCKET'] %>
+        key: <%= ENV['TEST_KEY'] %>
+        checksum: <%= ENV['TEST_CHECKSUM'] %>
+    excludes: ["ubuntu-14.04", "ubuntu-12.04", "centos-6.4", "centos-6.5"]
