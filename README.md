@@ -159,7 +159,7 @@ end
 Testing
 -------
 In order to run the integration tests for this cookbook, you must have a valid AWS account and go through a few setup steps.
-__*Please note, you may incure AWS fees when executing the kitchen integration tests.*__
+__*Please note, you may incur AWS fees when executing the kitchen integration tests.*__
 
 ### Local Configuration
 The testing suites are setup to use environment variables to pass in end user specific information.
