@@ -39,7 +39,7 @@ All attributes are located under `node['awscli']`
   </tr>
   <tr>
     <td>virtualenv</td>
-    <td>Pytdon virtualenv you would like to install awscli into</td>
+    <td>Python virtualenv you would like to install awscli into</td>
     <td>/home/ubuntu/my_ve</td>
     <td>nil</td>
   </tr>
