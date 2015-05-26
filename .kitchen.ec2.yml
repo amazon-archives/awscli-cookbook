@@ -1,0 +1,29 @@
+---
+driver:
+  name: ec2
+  aws_ssh_key_id: <%= ENV['AWS_KEYPAIR_NAME'] %>
+  iam_profile_name: <%= ENV['AWS_IAM_PROFILE'] %>
+  region: <%= ENV['AWS_REGION'] || 'us-east-1' %>
+  availability_zone: <%= ENV['AWS_AVAILABILITY_ZONE'] || 'us-east-1b' %>
+  instance_type: <%= ENV['AWS_FLAVOR_ID'] || 'm3.medium' %>
+
+transport:
+  ssh_key: <%= ENV['EC2_SSH_KEY_PATH'] %>
+  connection_timeout: 10
+  connection_retries: 5
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+
+platforms:
+  - name: ubuntu-14.04-ec2
+    driver:
+      image_id: <%= ENV['AWS_UBUNTU_1404_AMI'] %>
+    transport:
+      username: ubuntu
+  - name: amzn-linux-2014.09
+    driver:
+      image_id: <%= ENV['AWS_AMAZON_201409_AMI'] %>
+    transport:
+      username: ec2-user

@@ -27,3 +27,6 @@ attribute :aws_secret_access_key, :kind_of => [String, NilClass], :default => ni
 attribute :checksum, :kind_of => [String, NilClass], :default => nil
 attribute :region, :kind_of => String, :default => 'us-east-1'
 attribute :timeout, :kind_of => Integer, :default => 900
+attribute :owner, :kind_of => String, :default => 'root'
+attribute :group, :kind_of => String, :default => 'root'
+attribute :mode, :kind_of => [String, Integer, NilClass], :default => nil

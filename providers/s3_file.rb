@@ -16,8 +16,10 @@
 # language governing permissions and limitations under the License.
 #
 require 'chef/mixin/shell_out'
+require 'chef/scan_access_control'
 
 include Chef::Mixin::ShellOut
+include Chef::Mixin::EnforceOwnershipAndPermissions
 
 use_inline_resources if defined?(use_inline_resources)
 
@@ -35,6 +37,13 @@ def load_current_resource
 
   if ::File.exist?(new_resource.path)
     @current_resource.checksum(Chef::Digester.checksum_for_file(new_resource.path))
+  end
+
+  # Approach using a similar method to the built-in file resource.
+  # https://github.com/chef/chef/blob/master/lib/chef/provider/file.rb
+  unless Chef::Platform.windows?
+    acl_scanner = ScanAccessControl.new(@new_resource, @current_resource)
+    acl_scanner.set_all!
   end
 
   @current_resource
@@ -57,6 +66,11 @@ def s3_get
   cmd << "s3://#{new_resource.bucket}/#{new_resource.key} "
   cmd << new_resource.path
   s3_cmd(cmd)
+
+  return unless access_controls.requires_changes?
+  converge_by(access_controls.describe_changes) do
+    access_controls.set_all
+  end
 end
 
 def s3_cmd(command)
@@ -69,4 +83,9 @@ def s3_cmd(command)
   # Shell out options
   options = { :timeout => new_resource.timeout, :environment => environment }
   shell_out!(command, options)
+end
+
+# Borrowing from the file resource in core chef
+def manage_symlink_access?
+  false
 end

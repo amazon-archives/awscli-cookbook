@@ -13,8 +13,23 @@
 #
 include_recipe 'awscli::default'
 
+user 'testuser' do
+  comment 'Test kitchen user'
+  system true
+  action :create
+end
+
+group 'testgroup' do
+  append true
+  members 'testuser'
+  action :create
+end
+
 # Specifying all download options
 awscli_s3_file "/tmp/testfile" do
+  owner 'testuser'
+  group 'testgroup'
+  mode '0755'
   bucket node['test_get']['bucket']
   key node['test_get']['key']
   checksum node['test_get']['checksum']
@@ -23,8 +38,17 @@ awscli_s3_file "/tmp/testfile" do
   region node['test_get']['region']
 end
 
-# Default download options
+# Test differing mode
 awscli_s3_file "/tmp/testfile2" do
+  mode '1511'
+  bucket node['test_get']['bucket']
+  key node['test_get']['key']
+  aws_access_key_id node['test_get']['aws_access_key_id']
+  aws_secret_access_key node['test_get']['aws_secret_access_key']
+end
+
+# Default download options
+awscli_s3_file "/tmp/testfile3" do
   bucket node['test_get']['bucket']
   key node['test_get']['key']
   aws_access_key_id node['test_get']['aws_access_key_id']

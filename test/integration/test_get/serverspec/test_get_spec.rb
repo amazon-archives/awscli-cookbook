@@ -18,10 +18,24 @@ node = ::JSON.parse(File.read('/tmp/serverspec/node.json'))
 
 describe file('/tmp/testfile') do
   it { should be_file }
+  it { should be_mode 755 }
+  it { should be_owned_by 'testuser' }
+  it { should be_grouped_into 'testgroup' }
   its(:sha256sum) { should eq node['test_get']['checksum'] }
 end
 
 describe file('/tmp/testfile2') do
   it { should be_file }
+  it { should be_mode 1511 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
+  its(:sha256sum) { should eq node['test_get']['checksum'] }
+end
+
+describe file('/tmp/testfile3') do
+  it { should be_file }
+  it { should be_mode 644 }
+  it { should be_owned_by 'root' }
+  it { should be_grouped_into 'root' }
   its(:sha256sum) { should eq node['test_get']['checksum'] }
 end

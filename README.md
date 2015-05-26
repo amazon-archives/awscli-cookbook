@@ -114,6 +114,21 @@ Resources/Providers
     <td>Number of seconds to wait for download to complete</td>
     <td>900</td>
   <tr>
+  <tr>
+    <td>owner</td>
+    <td>The owner of the downloaded file</td>
+    <td>root</td>
+  </tr>
+  <tr>
+    <td>group</td>
+    <td>The group name the file should be grouped into</td>
+    <td>root</td>
+  </tr>
+  <tr>
+    <td>mode</td>
+    <td>The mode to set on the file. Setting to nil, leaves this to the operating system defaults</td>
+    <td>nil</td>
+  </tr>
 </table>
 
 #### Usage Examples
@@ -127,6 +142,9 @@ awscli_s3_file '/tmp/testfile' do
   key 'my_large_file.gz'
   checksum '37f9405a23d1e53082dbe9ea0ef19ec8791c778a6ecd0b02a6c1af2cf9bd4847'
   timeout 1200
+  owner 'testuser'
+  group 'testgroup'
+  mode '0644'
 end
 ```
 
