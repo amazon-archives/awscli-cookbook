@@ -20,6 +20,10 @@ describe 'awscli::_linux' do
     end.converge(described_recipe)
   end
 
+  it 'installs groff package' do
+    expect(chef_run).to install_package('groff')
+  end
+
   it 'includes the python::pip recipe' do
     expect(chef_run).to include_recipe('python::pip')
   end
