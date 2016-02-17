@@ -14,18 +14,36 @@
 require_relative '../spec_helper'
 
 describe 'awscli::_linux' do
-  cached(:chef_run) do
-    ChefSpec::SoloRunner.new(platform: 'ubuntu', version: '14.04') do |node|
-      node.set['awscli']['virtualenv'] = '/opt/fake/pip'
-    end.converge(described_recipe)
+  let(:chef_run) do
+    ChefSpec::SoloRunner.new(
+      :platform => 'ubuntu',
+      :version => '14.04'
+    )
   end
 
   it 'includes the python::pip recipe' do
+    chef_run.converge(described_recipe)
     expect(chef_run).to include_recipe('python::pip')
   end
 
   it 'installs awscli via pip' do
+    chef_run.node.set['awscli']['virtualenv'] = '/opt/fake/pip'
+    chef_run.converge(described_recipe)
     expect(chef_run).to install_python_pip('awscli')
       .with_virtualenv('/opt/fake/pip')
+  end
+
+  it 'installs specified version of awscli via pip' do
+    chef_run.node.set['awscli']['version'] = '1.10.4'
+    chef_run.converge(described_recipe)
+    expect(chef_run).to install_python_pip('awscli')
+      .with_version('1.10.4')
+  end
+
+  it 'dont set version if value is set to present' do
+    chef_run.node.set['awscli']['version'] = 'present'
+    chef_run.converge(described_recipe)
+    expect(chef_run).to install_python_pip('awscli')
+      .with_version(nil)
   end
 end
