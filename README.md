@@ -1,3 +1,11 @@
+
+*** DEPRECATED ***
+==================
+
+This repository is deprecated in favour of the https://github.com/nickryand/cloudcli-cookbook fork.
+
+---
+
 awscli Cookbook
 =============
 Installs the AWS Command Line Interface tools and provides a set of LWRPs for use within chef cookbooks.
