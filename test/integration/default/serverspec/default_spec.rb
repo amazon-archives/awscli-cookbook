@@ -20,3 +20,7 @@ end
 describe command('aws --version') do
   its(:exit_status) { should eq 0 }
 end
+
+describe command('aws help') do
+  its(:exit_status) { should eq 0 }
+end
