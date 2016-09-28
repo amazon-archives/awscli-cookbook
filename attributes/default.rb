@@ -15,6 +15,7 @@
 # ANY KIND, either express or implied. See the License for the specific
 # language governing permissions and limitations under the License.
 #
+default['awscli']['version'] = '1.10.4'
 default['awscli']['virtualenv'] = nil
 default['awscli']['windows_url'] = 'https://s3.amazonaws.com/aws-cli/AWSCLI64.msi'
 default['awscli']['binary'] = case node['platform_family']

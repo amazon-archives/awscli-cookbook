@@ -19,5 +19,6 @@ include_recipe 'python::pip'
 
 python_pip 'awscli' do
   virtualenv node['awscli']['virtualenv'] if node['awscli']['virtualenv']
+  version node['awscli']['version'] if node['awscli']['version'] != 'present'
   action :install
 end

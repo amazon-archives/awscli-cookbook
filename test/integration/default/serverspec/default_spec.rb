@@ -19,4 +19,5 @@ end
 
 describe command('aws --version') do
   its(:exit_status) { should eq 0 }
+  its(:stderr) { should contain('aws-cli/1.10.4') }
 end

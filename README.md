@@ -41,9 +41,9 @@ All attributes are located under `node['awscli']`
   </tr>
   <tr>
     <td>version</td>
-    <td>The version of awscli to install</td>
-    <td>1.4.0</td>
-    <td>1.4.4</td>
+    <td>The version of awscli to install. Setting to 'present' will not set a version</td>
+    <td>1.10.4</td>
+    <td>1.10.4</td>
   </tr>
   <tr>
     <td>virtualenv</td>
