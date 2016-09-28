@@ -164,6 +164,53 @@ awscli_s3_file '/tmp/testfile' do
 end
 ```
 
+### awscli_config
+#### Actions
+<table>
+  <tr>
+    <th>Action</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>:create</td>
+    <td>Creates awscli config for specified user</td>
+  </tr>
+</table>
+
+#### Attribute Parameters
+<table>
+  <tr>
+    <th>Parameter</th>
+    <th>Description</th>
+    <th>Default</th>
+  </tr>
+  <tr>
+    <td>homedir</td>
+    <td>home directory</td>
+    <td>/home/username</td>
+  </tr>
+  <tr>
+    <td>region</td>
+    <td>AWS region</td>
+    <td>us-east-1</td>
+  </tr>
+  <tr>
+    <td>credentials_databag</td>
+    <td>Data bag containing AWS credentials</td>
+    <td>nil</td>
+  </tr>
+</table>
+
+#### Usage Examples
+```ruby
+# Provide data bag containing credentials for config file
+awscli_config 'postgres' do
+  homedir '/var/lib/pgsql'
+  credentials_databag 'postgres_iam_keys'
+  region 'us-west-2'
+end
+```
+
 Testing
 -------
 In order to run the integration tests for this cookbook, you must have a valid AWS account and go through a few setup steps.
