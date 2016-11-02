@@ -79,6 +79,10 @@ def s3_cmd(command)
   environment['AWS_DEFAULT_REGION'] = new_resource.region
   environment['AWS_ACCESS_KEY_ID'] = new_resource.aws_access_key_id unless new_resource.aws_access_key_id.nil?
   environment['AWS_SECRET_ACCESS_KEY'] = new_resource.aws_secret_access_key unless new_resource.aws_secret_access_key.nil?
+  # Retain chef HTTP(S) proxy settings https://docs.chef.io/proxies.html
+  %w(http_proxy http_proxy_pass http_proxy_user https_proxy https_proxy_pass https_proxy_user no_proxy).each do |proxy_env|
+    environment[proxy_env] = ENV[proxy_env] if ENV.has_key?(proxy_env)
+  end
 
   # Shell out options
   options = { :timeout => new_resource.timeout, :environment => environment }
