@@ -2,7 +2,7 @@
 *** DEPRECATED ***
 ==================
 
-This repository is deprecated in favour of the https://github.com/nickryand/cloudcli-cookbook fork.
+This repository is deprecated in favour of the https://github.com/cmlicata/cloudcli-cookbook fork.
 
 ---
 
